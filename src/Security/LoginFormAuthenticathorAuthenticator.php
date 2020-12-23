@@ -2,8 +2,10 @@
 
 namespace App\Security;
 
-use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+use App\DataTransferObject\Credentials;
+use App\Form\LoginType;
+use App\Repository\UserRepository;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -14,8 +16,6 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
@@ -27,17 +27,21 @@ class LoginFormAuthenticathorAuthenticator extends AbstractFormLoginAuthenticato
 
     public const LOGIN_ROUTE = 'app_login';
 
-    private $entityManager;
     private $urlGenerator;
-    private $csrfTokenManager;
     private $passwordEncoder;
+    private FormFactoryInterface $formFactory;
+    private UserRepository $userRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        UrlGeneratorInterface $urlGenerator,
+        UserPasswordEncoderInterface $passwordEncoder,
+        FormFactoryInterface $formFactory,
+        UserRepository $userRepository
+    ) {
         $this->urlGenerator = $urlGenerator;
-        $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->formFactory = $formFactory;
+        $this->userRepository = $userRepository;
     }
 
     public function supports(Request $request)
@@ -48,27 +52,25 @@ class LoginFormAuthenticathorAuthenticator extends AbstractFormLoginAuthenticato
 
     public function getCredentials(Request $request)
     {
-        $credentials = [
-            'email' => $request->request->get('email'),
-            'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('_csrf_token'),
-        ];
+        /** Credentials $credentials */
+        $credentials = new Credentials('');
+        $form = $this->formFactory->create(LoginType::class, $credentials)->handleRequest($request);
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['email']
+            $credentials->getEmail()
         );
+
+        if (!$form->isValid()) {
+            return null;
+        }
 
         return $credentials;
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
-        if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new InvalidCsrfTokenException();
-        }
-
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->userRepository->findOneByEmail($credentials->getEmail());
 
         if (!$user) {
             // fail authentication with a custom error
@@ -80,7 +82,7 @@ class LoginFormAuthenticathorAuthenticator extends AbstractFormLoginAuthenticato
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        return $this->passwordEncoder->isPasswordValid($user, $credentials->getPassword());
     }
 
     /**
@@ -88,7 +90,7 @@ class LoginFormAuthenticathorAuthenticator extends AbstractFormLoginAuthenticato
      */
     public function getPassword($credentials): ?string
     {
-        return $credentials['password'];
+        return $credentials->getPassword();
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
