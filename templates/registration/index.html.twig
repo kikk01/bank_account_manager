@@ -5,9 +5,9 @@
 {% block body %}
 <div>
     {{ form_start(form) }}
-    {{ form_errors(form) }}
-    {{ form_rest(form) }}
-    <button>{{ 'validate'|trans({}, 'common') }}</button>
+    <div class="mb-3">{{ form_errors(form) }}</div>
+    <div class="mb-3">{{ form_rest(form) }}</div>
+    <button class="btn btn-lg btn-primary">{{ 'validate'|trans({}, 'common') }}</button>
     {{ form_end(form) }}
 </div>
 {% endblock %}
