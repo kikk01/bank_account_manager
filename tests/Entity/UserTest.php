@@ -3,12 +3,10 @@
 namespace App\Tests\Entity;
 
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Tests\AbstractKernelTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
-use Symfony\Component\Validator\ConstraintViolation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class UserTest extends KernelTestCase
+class UserTest extends AbstractKernelTestCase
 {
     use FixturesTrait;
 
@@ -20,6 +18,7 @@ class UserTest extends KernelTestCase
     public function testInvalidMail()
     {
         $this->assertHasErrors($this->getEntity()->setEmail('azezae'), 1);
+        $this->assertHasErrors($this->getEntity()->setEmail('test@test..test'), 1);
     }
 
     public function testInvalidBlankEmail()
@@ -31,21 +30,6 @@ class UserTest extends KernelTestCase
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/fixtures/user.yaml']);
         $this->assertHasErrors($this->getEntity()->setEmail('used@test.fr'), 1);
-    }
-
-    private function assertHasErrors(User $user, int $number = 0)
-    {
-        self::bootKernel();
-        $errors = self::$container->get(ValidatorInterface::class)->validate($user);
-
-        $messages = [];
-
-        /** @var ConstraintViolation $error */
-        foreach($errors as $error) {
-            $messages[] = $error->getPropertyPath() . ' => ' . $error->getMessage();
-        }
-
-        $this->assertCount($number, $errors, implode(',', $messages));
     }
 
     private function getEntity(): User
