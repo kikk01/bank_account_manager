@@ -1,0 +1,13 @@
+App\Entity\BankAccount:
+  bank_account:
+    accountNumber: '12345123456789112'
+    name: 'used name'
+    balance: 100.00
+  bank_account_empty:
+    accountNumber: ''
+    name: 'used name'
+    balance: 100.00
+  bank_account_empty_2:
+    accountNumber: null
+    name: 'used name'
+    balance: 100.00
