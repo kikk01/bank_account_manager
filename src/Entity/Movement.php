@@ -40,8 +40,13 @@ class Movement
      * @ORM\ManyToOne(targetEntity="BankAccount")
      * Assert\Valid
      */
-    private BankAccount $bankAccount;
+    private ?BankAccount $bankAccount;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * Assert\Valid
+     */
+    private ?Category $category;
 
     public function getId(): ?int
     {
@@ -84,22 +89,26 @@ class Movement
         return $this;
     }
 
-    /**
-     * Get the value of bankAccount
-     */ 
     public function getBankAccount(): BankAccount
     {
         return $this->bankAccount;
     }
 
-    /**
-     * Set the value of bankAccount
-     *
-     * @return  self
-     */ 
-    public function setBankAccount($bankAccount): self
+    public function setBankAccount(?Category $bankAccount): self
     {
         $this->bankAccount = $bankAccount;
+
+        return $this;
+    }
+
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category)
+    {
+        $this->category = $category;
 
         return $this;
     }
