@@ -2,18 +2,17 @@
 
 namespace App\Tests\Controller;
 
+use App\Tests\AbstractWebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class SecurityControllerTest extends WebTestCase
+class SecurityControllerTest extends AbstractWebTestCase
 {
     use FixturesTrait;
 
     public function testDisplayLogin()
     {
-        $client = static::createClient();
-        $client->request('GET', '/login');
+        $this->createClientThenRequest('/login');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('h1', 'Connection');
         $this->assertSelectorNotExists('.alert.alert-danger');
