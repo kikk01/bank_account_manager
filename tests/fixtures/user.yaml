@@ -1,4 +1,4 @@
 App\Entity\User:
   user:
-    email: 'used@test.fr'
-    password: '0000'
+    email: used\@test.fr
+    password: \$2y\$12\$lDzgOlIrlOLBKITw2hWqgO2.g5SnkJ3w7q17Lke7hoAHMAfT5ZLe.
