@@ -26,26 +26,23 @@ class HomeControllerTest extends AbstractWebTestCase
 
     public function testLoginRoute()
     {
-        $client = static::createClient();
-        $client->request('GET', '/');
-        $client->clickLink('Se connecter');
+        $this->createClientThenRequest('/');
+        $this->client->clickLink('Se connecter');
         $this->assertSelectorTextContains('h1', 'Connection');
     }
 
     public function testRegistrationRoute()
     {
-        $client = static::createClient();
-        $client->request('GET', '/');
-        $client->clickLink('S\'inscrire');
+        $this->createClientThenRequest('/');
+        $this->client->clickLink('S\'inscrire');
         $this->assertSelectorTextContains('h1', 'S\'inscrire');
     }
 
     public function testNavWhenConnected()
     {
-        $client = static::createClient();
-        $user = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
-        $client->loginUser($user['user']);
-        $client->request('GET', '/');
+        $users = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
+        $this->client->loginUser($users['user']);
+        $this->createClientThenRequest('/');
         $this->assertSelectorTextContains('ul.navbar-nav', 'Se déconnecter');
         $this->assertSelectorTextNotContains('ul.navbar-nav', 'Se connecter');
         $this->assertSelectorTextNotContains('ul.navbar-nav', 'S\'inscrire');

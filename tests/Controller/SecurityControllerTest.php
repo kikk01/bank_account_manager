@@ -20,30 +20,26 @@ class SecurityControllerTest extends AbstractWebTestCase
 
     public function testLoginWithBadCredentials()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
+        $crawler = $this->createClientThenRequest('/login');
+
         $form = $crawler->selectButton('valider')->form([
             'login' => ['email' => 'john@doe.fr', 'password' => 'fakepassword']
         ]);
-    
-        $client->submit($form);
-        
-        $this->assertResponseRedirects('/login');
-        $client->followRedirect();
+
+        $this->submitThenRedirect($form, '/login');
         $this->assertSelectorExists('.alert.alert-danger');
     }
 
     public function testSuccessfullLogin()
     {
-        $client = static::createClient();
         $this->loadFixtureFiles([dirname(__DIR__) . '/fixtures/user.yaml']);
-        $crawler = $client->request('GET', '/login');
+
+        $crawler = $this->createClientThenRequest('/login');
         $form = $crawler->selectButton('valider')->form([
             'login' => ['email' => 'used@test.fr', 'password' => '0000']
         ]);
-        
-        $client->submit($form);
-        $this->assertResponseRedirects('/');
+
+        $this->submitThenRedirect($form, '/');
     }
 
 
