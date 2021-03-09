@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Guard\AuthenticatorInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
@@ -18,13 +17,13 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/registration", name="registration")
      */
-    public function index(
+    public function registration(
         Request $request,
         UserPasswordEncoderInterface $userPasswordEncoder,
         GuardAuthenticatorHandler $guard,
         LoginFormAuthenticathorAuthenticator $login
     ): Response {
-        
+
         $user = new User;
 
         $form = $this->createForm(UserType::class, $user)->handleRequest($request);
