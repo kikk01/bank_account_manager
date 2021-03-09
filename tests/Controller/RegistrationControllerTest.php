@@ -2,7 +2,6 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\User;
 use App\Tests\AbstractWebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Component\DomCrawler\Crawler;

@@ -4,7 +4,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\Category;
 use App\Tests\AbstractKernelTestCase;
-use PHPUnit\Framework\TestCase;
 
 class CategoryTest extends AbstractKernelTestCase
 {
