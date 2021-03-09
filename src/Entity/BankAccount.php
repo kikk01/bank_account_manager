@@ -23,7 +23,6 @@ class BankAccount
     /**
      * @ORM\Column(type="string", length=17, nullable=true)
      * @Assert\Length(min=17, max=17)
-     * 
      */
     private ?string $accountNumber;
 
@@ -37,9 +36,8 @@ class BankAccount
     /**
      * @ORM\Column(type="decimal", precision=10, scale=4)
      * @Assert\Regex("/^-?\d{1,10}(\.\d{1,4})?$/")
-     * 
      */
-    private ?float $balance;
+    private ?float $balance = 0;
 
     public function getId(): ?int
     {
