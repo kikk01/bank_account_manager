@@ -12,6 +12,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class BankAccountController extends AbstractController
 {
     /**
+     * @Route("/bank-account/list", name="bank_account_list")
+     */
+    public function list() :Response
+    {
+        $user = $this->getUser();
+
+        return $this->render('bank_account/list.html.twig');
+    }
+
+
+    /**
      * @Route("/bank-account/create", name="bank_account_create")
      */
     public function create(Request $request, BankAccountHandlerService $bankAccountHandlerService): Response

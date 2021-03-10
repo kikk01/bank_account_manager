@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\BankAccount\Controller;
 
 use App\Tests\AbstractWebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
-use Symfony\Component\HttpFoundation\Response;
 
-class BankAccountControllerTest extends AbstractWebTestCase
+class BankAccountCreateControllerTest extends AbstractWebTestCase
 {
     use FixturesTrait;
 
     public function testDisplayAccountCreate()
     {
-        $this->login();
-        $this->createClientThenRequest('/bank-account/create');
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertSelectorTextContains('h1', 'Nouveau compte');
+        $this->loadUserFixturesThenLogin();
+        $this->assertDisplay('/bank-account/create', 'Nouveau compte');
     }
 
     public function testUserNotConnected()
@@ -26,7 +23,7 @@ class BankAccountControllerTest extends AbstractWebTestCase
 
     public function testSuccessfullBankAccountAdd()
     {
-        $this->login();
+        $this->loadUserFixturesThenLogin();
         $crawler = $this->createClientThenRequest('/bank-account/create');
         $form = $crawler->selectButton('valider')->form([
             'bank_account' => [
@@ -39,7 +36,7 @@ class BankAccountControllerTest extends AbstractWebTestCase
 
     public function testInvalidBankAccountAdd()
     {
-        $this->login();
+        $this->loadUserFixturesThenLogin();
         $crawler = $this->createClientThenRequest('/bank-account/create');
         $form = $crawler->selectButton('valider')->form([
             'bank_account' => [
@@ -49,11 +46,4 @@ class BankAccountControllerTest extends AbstractWebTestCase
         ]);
         $this->submitInvalidForm($form);
     }
-
-    private function login(): void
-    {
-        $users = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
-        $this->client->loginUser($users['user']);
-    }
-
 }
