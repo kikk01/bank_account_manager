@@ -37,6 +37,19 @@ class BankAccountControllerTest extends AbstractWebTestCase
         $this->submitThenRedirect($form, '/');
     }
 
+    public function testInvalidBankAccountAdd()
+    {
+        $this->login();
+        $crawler = $this->createClientThenRequest('/bank-account/create');
+        $form = $crawler->selectButton('valider')->form([
+            'bank_account' => [
+                'name' => 'compte courant',
+                'accountNumber' => '1',
+            ]
+        ]);
+        $this->submitInvalidForm($form);
+    }
+
     private function login(): void
     {
         $users = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
