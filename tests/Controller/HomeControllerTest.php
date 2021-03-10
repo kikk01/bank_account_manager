@@ -47,4 +47,15 @@ class HomeControllerTest extends AbstractWebTestCase
         $this->assertSelectorTextNotContains('ul.navbar-nav', 'Se connecter');
         $this->assertSelectorTextNotContains('ul.navbar-nav', 'S\'inscrire');
     }
+
+    public function testLogoutRoute()
+    {
+        $users = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
+        $this->client->loginUser($users['user']);
+        $this->createClientThenRequest('/');
+        $this->client->clickLink('Se déconnecter');
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('h1', 'Hello');
+    }
 }
