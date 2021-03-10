@@ -39,6 +39,12 @@ class BankAccount
      */
     private ?float $balance = 0;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @Assert\Valid
+     */
+    private ?User $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +82,26 @@ class BankAccount
     public function setBalance(?float $balance): self
     {
         $this->balance = $balance;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of user
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set the value of user
+     *
+     * @return  self
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
