@@ -28,4 +28,10 @@ abstract class AbstractWebTestCase extends WebTestCase
         $this->assertResponseRedirects($path);
         $this->client->followRedirect();
     }
+
+    protected function submitInvalidForm($form)
+    {
+        $this->client->submit($form);
+        $this->assertSelectorExists('.form-error-message');
+    }
 }

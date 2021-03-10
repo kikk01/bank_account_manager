@@ -35,9 +35,7 @@ class RegistrationControllerTest extends AbstractWebTestCase
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'used@test.fr', '00000000', '00000000');
-
-        $this->submitThenRedirect($form, 'registration');
-        $this->assertSelectorExists('.alert.alert-danger');
+        $this->submitInvalidForm($form);
     }
 
     public function testInvalidRegisterNotSamePassword()
@@ -46,9 +44,7 @@ class RegistrationControllerTest extends AbstractWebTestCase
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'new@test.fr', '000000000000', '00000000');
-
-        $this->submitThenRedirect($form, 'registration');
-        $this->assertSelectorExists('form-error-message');
+        $this->submitInvalidForm($form);
     }
 
     public function testInvalidRegisterTooShortPassword()
@@ -57,9 +53,7 @@ class RegistrationControllerTest extends AbstractWebTestCase
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'new@test.fr', '10000000', '00000000');
-
-        $this->submitThenRedirect($form, 'registration');
-        $this->assertSelectorExists('.form-error-message');
+        $this->submitInvalidForm($form);
     }
 
     private function handleRegisterForm(
