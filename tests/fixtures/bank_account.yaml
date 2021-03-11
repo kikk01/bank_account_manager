@@ -1,13 +1,19 @@
+include:
+  - user.yaml
+
 App\Entity\BankAccount:
   bank_account:
     accountNumber: '12345123456789112'
-    name: 'used name'
+    name: 'compte courant'
     balance: 100.00
+    user: '@user'
   bank_account_empty:
     accountNumber: ''
-    name: 'used name'
+    name: 'autre compte'
     balance: 100.00
+    user: '@user'
   bank_account_empty_2:
     accountNumber: null
-    name: 'used name'
+    name: 'compte professionnel'
     balance: 100.00
+    user: '@user'

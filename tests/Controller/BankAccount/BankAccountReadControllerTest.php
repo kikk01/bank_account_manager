@@ -15,7 +15,7 @@ class BankAccountReadControllerTest extends AbstractWebTestCase
     {
         $this->loadUserFixturesThenLogin();
         $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/bank_account.yaml']);
-        $this->assertDisplay(self::PATH, 'Compte : ');
+        $this->assertDisplay(self::PATH, 'Compte: compte courant');
     }
 
     public function testUserNotConnected()

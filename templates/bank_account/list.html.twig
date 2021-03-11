@@ -4,4 +4,16 @@
 
 {% block body %}
 <h1 class="h3 mb-3 font-weight-normal">Liste des comptes</h1>
+<div class="row">
+    {% for bankAccount in bankAccounts %}
+        <div class="col-auto">
+            <a
+                href="{{ path('bank_account_read', {id: bankAccount.id}) }}"
+                class="list-group-item-success d-flex justify-content-between text-nowrap"
+            >
+                {{ bankAccount.name }} <span class="badge bg-primary rounded-pill">{{ bankAccount.balance }}</span>
+            </a>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
