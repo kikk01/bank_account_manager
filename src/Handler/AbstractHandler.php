@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Service;
+namespace App\Handler;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -11,6 +12,7 @@ Abstract class AbstractHandler
 {
     private FormFactoryInterface $formFactory;
     protected FormInterface $form;
+    protected EntityManagerInterface $em;
 
     abstract protected function getFormType(): string;
 
@@ -22,6 +24,14 @@ Abstract class AbstractHandler
     public function setFormFactory(FormFactoryInterface $formFactory)
     {
         $this->formFactory = $formFactory;
+    }
+
+    /**
+     * @Required
+     */
+    public function setEntityManager(EntityManagerInterface $em)
+    {
+        $this->em = $em;
     }
 
     public function handle(Request $request, object $entity): bool
