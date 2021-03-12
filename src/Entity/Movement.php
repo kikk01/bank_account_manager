@@ -35,13 +35,13 @@ class Movement
      * @ORM\Column(type="date")
      */
     private ?DateTime $date;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="BankAccount")
      * Assert\Valid
      */
     private ?BankAccount $bankAccount;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Category")
      * Assert\Valid
@@ -94,7 +94,7 @@ class Movement
         return $this->bankAccount;
     }
 
-    public function setBankAccount(?Category $bankAccount): self
+    public function setBankAccount(?BankAccount $bankAccount): self
     {
         $this->bankAccount = $bankAccount;
 
