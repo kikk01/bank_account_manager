@@ -13,14 +13,14 @@ class RegistrationControllerTest extends AbstractWebTestCase
 
     public function testDisplayRegistration()
     {
-        $this->createClientThenRequest('/registration');
+        $this->request('/registration');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('h1', 'S\'inscrire');
     }
 
     public function testSuccessfullRegister()
     {
-        $crawler = $this->createClientThenRequest('/registration');
+        $crawler = $this->request('/registration');
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'register@doe.fr', '00000000', '00000000');
@@ -31,7 +31,7 @@ class RegistrationControllerTest extends AbstractWebTestCase
 
     public function testInvalidRegisterUsedEmail()
     {
-        $crawler = $this->createClientThenRequest('/registration');
+        $crawler = $this->request('/registration');
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'used@test.fr', '00000000', '00000000');
@@ -40,7 +40,7 @@ class RegistrationControllerTest extends AbstractWebTestCase
 
     public function testInvalidRegisterNotSamePassword()
     {
-        $crawler = $this->createClientThenRequest('/registration');
+        $crawler = $this->request('/registration');
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'new@test.fr', '000000000000', '00000000');
@@ -49,7 +49,7 @@ class RegistrationControllerTest extends AbstractWebTestCase
 
     public function testInvalidRegisterTooShortPassword()
     {
-        $crawler = $this->createClientThenRequest('/registration');
+        $crawler = $this->request('/registration');
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'new@test.fr', '10000000', '00000000');

@@ -12,7 +12,7 @@ class SecurityControllerTest extends AbstractWebTestCase
 
     public function testDisplayLogin()
     {
-        $this->createClientThenRequest('/login');
+        $this->request(self::LOGIN_PATH);
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('h1', 'Connection');
         $this->assertSelectorNotExists('.alert.alert-danger');
@@ -20,13 +20,13 @@ class SecurityControllerTest extends AbstractWebTestCase
 
     public function testLoginWithBadCredentials()
     {
-        $crawler = $this->createClientThenRequest('/login');
+        $crawler = $this->request(self::LOGIN_PATH);
 
         $form = $crawler->selectButton('valider')->form([
             'login' => ['email' => 'john@doe.fr', 'password' => 'fakepassword']
         ]);
 
-        $this->submitThenRedirect($form, '/login');
+        $this->submitThenRedirect($form, self::LOGIN_PATH);
         $this->assertSelectorExists('.alert.alert-danger');
     }
 
@@ -34,7 +34,7 @@ class SecurityControllerTest extends AbstractWebTestCase
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/fixtures/user.yaml']);
 
-        $crawler = $this->createClientThenRequest('/login');
+        $crawler = $this->request(self::LOGIN_PATH);
         $form = $crawler->selectButton('valider')->form([
             'login' => ['email' => 'used@test.fr', 'password' => '0000']
         ]);

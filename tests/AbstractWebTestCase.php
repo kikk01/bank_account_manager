@@ -23,20 +23,20 @@ abstract class AbstractWebTestCase extends WebTestCase
         $this->client = self::createClient();
     }
 
-    protected function createClientThenRequest(string $path, ?string $method = 'GET'): Crawler
+    protected function request(string $path, ?string $method = 'GET'): Crawler
     {
         return $this->client->request($method, $path);
     }
 
-    protected function loadUserFixturesThenLogin(): void
+    protected function loadUserFixturesThenLogin($user): void
     {
         $users = $this->loadFixtureFiles([__DIR__.'/fixtures/user.yaml']);
-        $this->client->loginUser($users['user']);
+        $this->client->loginUser($users[$user]);
     }
 
     protected function assertDisplay($path, $textContain): void
     {
-        $this->createClientThenRequest($path);
+        $this->request($path);
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('h1', $textContain);
     }
