@@ -31,7 +31,7 @@ class BankAccountCreateControllerTest extends AbstractWebTestCase
                 'accountNumber' => '12345123456789012',
             ]
         ]);
-        $this->submitThenRedirect($form, '/');
+        $this->submitThenRedirect($form, BankAccountListControllerTest::PATH);
     }
 
     public function testInvalidBankAccountAdd()

@@ -41,7 +41,7 @@ class BankAccountController extends AbstractController
         $bankAccount = new BankAccount;
 
         if ($bankAccountHandler->handle($request, $bankAccount)) {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('bank_account_list');
         }
 
         return $this->render('bank_account/create.html.twig', [
