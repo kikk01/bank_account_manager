@@ -1,0 +1,9 @@
+include:
+  - bank_account.yaml
+
+App\Entity\Movement:
+  movement{1..10}:
+    description: 'mouvement <current()>'
+    amount: <current()>
+    date: <dateTime()>
+    bankAccount: '@bank_account'

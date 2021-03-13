@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\MovementService;
 
 class BankAccountController extends AbstractController
 {
@@ -52,10 +53,11 @@ class BankAccountController extends AbstractController
     /**
      * @Route("/bank-account/{id}/read", name="bank_account_read")
      */
-    public function read(BankAccount $bankAccount)
+    public function read(BankAccount $bankAccount, MovementService $movementService): Response
     {
         return $this->render('bank_account/read.html.twig', [
-            'bankAccount' => $bankAccount
+            'bankAccount' => $bankAccount,
+            'movements' => $movementService->getMovementsByBankAccount($bankAccount)
         ]);
     }
 }

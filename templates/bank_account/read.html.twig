@@ -4,4 +4,26 @@
 
 {% block body %}
 <h1 class="h3 mb-3 font-weight-normal">Compte: {{ bankAccount.name }}</h1>
+
+<table class="table table-dark table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Montant</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for movement in movements %}
+            <tr {% if movement.isDebit %}class="text-danger"{% endif %}>
+                <td>{{ movement.date|date('d-m-Y') }}</td>
+                <td>{{ movement.category }}</td>
+                <td>{{ movement.description }}</td>
+                <td>{{ movement.amount }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}

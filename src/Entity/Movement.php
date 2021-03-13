@@ -44,9 +44,8 @@ class Movement
 
     /**
      * @ORM\ManyToOne(targetEntity="Category")
-     * Assert\Valid
      */
-    private ?Category $category;
+    private ?Category $category = null;
 
     public function getId(): ?int
     {
@@ -101,7 +100,7 @@ class Movement
         return $this;
     }
 
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
@@ -111,5 +110,10 @@ class Movement
         $this->category = $category;
 
         return $this;
+    }
+
+    public function isDebit(): bool
+    {
+        return $this->amount < 0;
     }
 }
