@@ -28,7 +28,7 @@ abstract class AbstractWebTestCase extends WebTestCase
         return $this->client->request($method, $path);
     }
 
-    protected function loadUserFixturesThenLogin($user): void
+    protected function loadUserFixturesThenLogin(string $user): void
     {
         $users = $this->loadFixtureFiles([__DIR__.'/fixtures/user.yaml']);
         $this->client->loginUser($users[$user]);
