@@ -16,7 +16,7 @@ Abstract class AbstractHandler
 
     abstract protected function getFormType(): string;
 
-    abstract protected function process(object $data): void;
+    abstract protected function process(?object $data): void;
 
     /**
      * @Required
@@ -34,9 +34,9 @@ Abstract class AbstractHandler
         $this->em = $em;
     }
 
-    public function handle(Request $request, object $entity): bool
+    public function handle(Request $request, ?object $entity = null, $options = []): bool
     {
-        $this->form = $this->formFactory->create($this->getFormType(), $entity)->handleRequest($request);
+        $this->form = $this->formFactory->create($this->getFormType(), $entity, $options)->handleRequest($request);
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->process($entity);
 

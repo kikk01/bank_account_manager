@@ -7,7 +7,7 @@ use App\Repository\MovementRepository;
 
 class MovementService
 {
-    protected MovementRepository $movementRepository;
+    private MovementRepository $movementRepository;
 
     public function __construct(MovementRepository $movementRepository)
     {
@@ -18,7 +18,6 @@ class MovementService
     {
         return $this->movementRepository->findByBankAccount(
             $bankAccount,
-            [],
             ['date' => 'DESC']
         );
     }

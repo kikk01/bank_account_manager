@@ -21,7 +21,7 @@ class BankAccountHandler extends AbstractHandler
         return BankAccountType::class;
     }
 
-    protected function process(object $bankAccount): void
+    protected function process(?object $bankAccount): void
     {
         if ($this->em->getUnitOfWork()->getEntityState($bankAccount) === UnitOfWork::STATE_NEW) {
             $bankAccount->setUser($this->security->getUser());

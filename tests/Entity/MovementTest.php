@@ -23,6 +23,11 @@ class MovementTest extends AbstractKernelTestCase
         $this->assertHasErrors($this->getEntity()->setAmount(-100000000000), 1);
     }
 
+    public function testInvalidZeroAmount()
+    {
+        $this->assertHasErrors($this->getEntity()->setAmount(0), 1);
+    }
+
     public function testInvalideTooManyNumberAfterDecimalPointAmount()
     {
         $this->assertHasErrors($this->getEntity()->setAmount(-100.00011), 1);

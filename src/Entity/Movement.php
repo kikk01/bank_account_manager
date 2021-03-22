@@ -28,6 +28,7 @@ class Movement
     /**
      * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      * @Assert\Regex("/^-?\d{1,10}(\.\d{1,4})?$/")
+     * @Assert\NotEqualTo(value=0)
      */
     private ?float $amount;
 
@@ -38,6 +39,7 @@ class Movement
 
     /**
      * @ORM\ManyToOne(targetEntity="BankAccount")
+     * @ORM\JoinColumn(nullable=false)
      * Assert\Valid
      */
     private ?BankAccount $bankAccount;
