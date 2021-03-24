@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Handler\MovementCreateHandler;
-use App\Service\FindBankAccountsByUser;
+use App\Service\BankAccount\FindBankAccountsByUser;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +24,7 @@ class MovementController
         Environment $twig
 
     ): Response {
-        $options = ['bank_accounts' => $findBankAccountsByUser->FindBankAccountsByUser()];
+        $options = ['bank_accounts' => $findBankAccountsByUser->findBankAccountsByUser()];
         if ($movementCreateHandler->handle($request, null, $options)){
             return new RedirectResponse($urlGenerator->generate('bank_account_list'));
         }
