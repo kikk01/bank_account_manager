@@ -3,7 +3,12 @@ include:
 
 App\Entity\Movement:
   movement{1..10}:
-    description: 'mouvement <current()>'
+    description: 'movement <current()>'
     amount: <current()>
     date: <dateTime()>
+    bankAccount: '@bank_account'
+  movement_test_duplicate:
+    description: 'movement exist'
+    amount: 100
+    date: <(new \DateTime('2021-02-26'))>
     bankAccount: '@bank_account'
