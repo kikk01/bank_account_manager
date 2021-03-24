@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\BankAccount;
 
 use App\Repository\BankAccountRepository;
 use Symfony\Component\Security\Core\Security;
@@ -17,7 +17,7 @@ class FindBankAccountsByUser
         $this->bankAccountRepository = $bankAccountRepository;
     }
 
-    public function FindBankAccountsByUser(): array
+    public function findBankAccountsByUser(): array
     {
         /** @var User $user */
         $user = $this->security->getUser();
