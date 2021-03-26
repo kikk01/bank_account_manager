@@ -4,9 +4,5 @@
 
 {% block body %}
     <h1 class="h3 mb-3 font-weight-normal">Nouveau compte</h1>
-    {{ form_start(form) }}
-    <div class="mb-3">{{ form_errors(form) }}</div>
-    <div class="mb-3">{{ form_rest(form) }}</div>
-    <button class="btn btn-lg btn-primary">{{ 'validate'|trans({}, 'common') }}</button>
-    {{ form_end(form) }}
+    {% include "form.html.twig" %}
 {% endblock %}

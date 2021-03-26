@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    <div class="mb-3">{{ form_errors(form) }}</div>
+    <div class="mb-3">{{ form_rest(form) }}</div>
+    <button class="btn btn-lg btn-primary">{{ 'validate'|trans({}, 'common') }}</button>
+{{ form_end(form) }}
