@@ -5,11 +5,11 @@ namespace App\Tests\BankAccount\Controller;
 use App\Tests\AbstractWebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 
-class BankAccountReadControllerTest extends AbstractWebTestCase
+class MovementListControllerTest extends AbstractWebTestCase
 {
     use FixturesTrait;
 
-    const PATH = '/bank-account/1/read';
+    const PATH = '/bank-account/1/movement/list';
 
     public function testDisplayAccountRead()
     {
