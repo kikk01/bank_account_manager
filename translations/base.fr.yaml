@@ -1,4 +1,6 @@
 title: 'Bienvenue !'
-nav.home: 'accueil'
+nav.home: 'Accueil'
 nav.logout: 'Se déconnecter'
 nav.login: 'Se connecter'
+nav.bank_account_list: 'Mes comptes'
+nav.bank_account_create: 'Nouveau compte'
