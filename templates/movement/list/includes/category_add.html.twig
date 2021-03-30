@@ -1,0 +1,29 @@
+{{ form_start(form, {'action': path('movement_category_add_ajax', {'id':movementId})}) }}
+    <div class="mb-3">{{ form_errors(form) }}</div>
+    <div data-controller="selectFieldWithNewOption">
+        <div class="mb-3" data-selectFieldWithNewOption-target='selectBlock'>
+            {{ form_row(form.category,{'attr': {
+                'data-action':'selectFieldWithNewOption#checkOptionSelected',
+                'data-selectFieldWithNewOption-target':'selectElt'
+            }}) }}
+            <button class="btn btn-lg btn-primary">{{ 'validate'|trans({}, 'common') }}</button>
+        </div>
+
+        <div class="mb-3" data-selectFieldWithNewOption-target='inputBlock'>
+            {{ form_row(form.new, {'attr': {
+                'data-selectFieldWithNewOption-target':'inputElt'
+            }}) }}
+
+            <button class="btn btn-lg btn-primary">{{ 'validate'|trans({}, 'common') }}</button>
+            <button
+                type="button"
+                class="btn btn-lg btn-success"
+                data-action='selectFieldWithNewOption#displaySelectField'
+                data-selectFieldWithNewOption-target='displaySelectBtn'
+            >
+                Sélectionner une catégorie
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}
+

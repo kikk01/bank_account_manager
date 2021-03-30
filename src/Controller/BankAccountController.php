@@ -8,7 +8,6 @@ use App\Service\BankAccount\FindBankAccountsByUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\MovementService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
@@ -46,17 +45,6 @@ class BankAccountController
 
         return New Response($this->twig->render('bank_account/create.html.twig', [
             'form' => $bankAccountHandler->createView()
-        ]));
-    }
-
-    /**
-     * @Route("/bank-account/{id}/read", name="bank_account_read")
-     */
-    public function read(BankAccount $bankAccount, MovementService $movementService): Response
-    {
-        return New Response($this->twig->render('bank_account/read.html.twig', [
-            'bankAccount' => $bankAccount,
-            'movements' => $movementService->getMovementsByBankAccount($bankAccount)
         ]));
     }
 }

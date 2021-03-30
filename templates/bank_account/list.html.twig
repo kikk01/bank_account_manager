@@ -8,7 +8,7 @@
     {% for bankAccount in bankAccounts %}
         <div class="col-auto">
             <a
-                href="{{ path('bank_account_read', {id: bankAccount.id}) }}"
+                href="{{ path('movement_list', {id: bankAccount.id}) }}"
                 class="list-group-item-success d-flex justify-content-between text-nowrap"
             >
                 {{ bankAccount.name }} <span class="badge bg-primary rounded-pill">{{ bankAccount.balance }}</span>

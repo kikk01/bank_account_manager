@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Handler;
+namespace App\Handler\Movement;
 
-use App\Form\MovementCreateType;
+use App\Form\Movement\MovementCreateType;
+use App\Handler\AbstractHandler;
 use App\Service\Movement\MovementCreateService;
 use App\Utils\CsvExtractorUtils;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

@@ -10,3 +10,5 @@ import './styles/app.sass';
 
 // start the Stimulus application
 import './bootstrap';
+
+require('bootstrap');

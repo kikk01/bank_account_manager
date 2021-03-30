@@ -25,7 +25,7 @@ class MovementCreateControllerTest extends AbstractWebTestCase
     public function testSuccessfullSendAccountStatement()
     {
         $this->loadUserFixturesThenLogin('user');
-        $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/movements.yaml']);
+        $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/movements.yaml']);
 
         $crawler = $this->request(self::PATH);
         $form = $crawler->selectButton('valider')->form([
@@ -39,7 +39,7 @@ class MovementCreateControllerTest extends AbstractWebTestCase
     public function testNotPersistExistingMovements()
     {
         $this->loadUserFixturesThenLogin('user');
-        $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/movements.yaml']);
+        $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/movements.yaml']);
         $this->setMovementRepository();
 
         $this->verifyBddState();

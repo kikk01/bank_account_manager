@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Movement;
 
 use App\Entity\BankAccount;
 use App\Entity\Movement;
