@@ -25,7 +25,7 @@ class MovementAddCategoryType extends AbstractType
                 'class' => Category::class,
                 'choices' => $options['categories'],
                 'required' => false,
-                'placeholder' => 'new_category'
+                'placeholder' => 'choose_category'
             ])
             ->add('new', TextType::class, [
                 'mapped' => false,

@@ -3,27 +3,24 @@
     <div data-controller="selectFieldWithNewOption">
         <div class="mb-3" data-selectFieldWithNewOption-target='selectBlock'>
             {{ form_row(form.category,{'attr': {
-                'data-action':'selectFieldWithNewOption#checkOptionSelected',
                 'data-selectFieldWithNewOption-target':'selectElt'
             }}) }}
-            <button class="btn btn-lg btn-primary">{{ 'validate'|trans({}, 'common') }}</button>
         </div>
 
-        <div class="mb-3" data-selectFieldWithNewOption-target='inputBlock'>
+        <div class="mb-3" data-selectFieldWithNewOption-target='newInputBlock'>
             {{ form_row(form.new, {'attr': {
-                'data-selectFieldWithNewOption-target':'inputElt'
+                'data-selectFieldWithNewOption-target':'newInputElt'
             }}) }}
-
-            <button class="btn btn-lg btn-primary">{{ 'validate'|trans({}, 'common') }}</button>
-            <button
-                type="button"
-                class="btn btn-lg btn-success"
-                data-action='selectFieldWithNewOption#displaySelectField'
-                data-selectFieldWithNewOption-target='displaySelectBtn'
-            >
-                Sélectionner une catégorie
-            </button>
         </div>
+
+        <button class="btn btn-lg btn-primary">{{ 'validate'|trans({}, 'common') }}</button>
+        <button
+            type="button"
+            class="btn btn-lg btn-success"
+            data-action='selectFieldWithNewOption#switchField'
+            data-selectFieldWithNewOption-target='switchFieldBtn'
+        >
+            Sélectionner une catégorie
+        </button>
     </div>
 {{ form_end(form) }}
-
