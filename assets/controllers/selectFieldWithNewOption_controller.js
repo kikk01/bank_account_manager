@@ -4,51 +4,52 @@ export default class extends Controller {
     static targets = [
         'selectBlock',
         'selectElt',
-        'inputBlock',
-        'inputElt',
-        'displaySelectBtn'
+        'newInputBlock',
+        'newInputElt',
+        'switchFieldBtn'
     ]
 
     initialize() {
-        this.inputBlockElt = this.inputBlockTarget
-        this.inputFieldElt = this.inputEltTarget
+        this.newInputBlockElt = this.newInputBlockTarget
+        this.newInputFieldElt = this.newInputEltTarget
         this.selectBlockElt = this.selectBlockTarget
         this.selectFieldElt = this.selectEltTarget
-        this.displaySelectBtn = this.displaySelectBtnTarget
+        this.switchFieldBtn = this.switchFieldBtnTarget
     }
 
     connect() {
-        if (this.selectFieldElt.options.length === 0) {
-            this.displayNewOptionField()
+        console.log(this.selectFieldElt.options.length)
+        if (this.selectFieldElt.options.length === 1) {
+            this.displayNewInputBlock()
             this.disableDisplaySelectBtn()
-        } else if (this.selectFieldElt.value === '') {
-            this.displayNewOptionField()
         } else {
-            this.displaySelectField()
+            this.displaySelectBlock()
         }
     }
 
-    checkOptionSelected() {
-        if (this.selectFieldElt.value === '') {
-            this.displayNewOptionField()
-        }
+    switchField() {
+        this.selectBlockElt.classList.contains('d-none') ?
+            this.displaySelectBlock() : this.displayNewInputBlock()
     }
 
-    displayNewOptionField() {
+    displayNewInputBlock() {
         this.selectBlockElt.classList.add('d-none')
-        this.inputBlockElt.classList.remove('d-none')
+        this.newInputBlockElt.classList.remove('d-none')
+        this.switchFieldBtn.textContent = 'Sélectionner une catégorie'
     }
 
-    displaySelectField() {
+    displaySelectBlock() {
         this.selectBlockElt.classList.remove('d-none')
-        this.inputBlockElt.classList.add('d-none')
-        this.inputFieldElt.value = ''
+        this.newInputBlockElt.classList.add('d-none')
+        this.newInputFieldElt.value = ''
+        this.switchFieldBtn.textContent = 'Nouvelle catégorie'
+
     }
 
     disableDisplaySelectBtn() {
-        this.displaySelectBtn.disabled = true
-        this.displaySelectBtn.title = 'Veuillez créer une catégorie'
-        this.displaySelectBtn.style.pointerEvents = 'auto'
-        this.displaySelectBtn.style.cursor = 'not-allowed'
+        this.switchFieldBtn.disabled = true
+        this.switchFieldBtn.title = 'Veuillez créer une catégorie'
+        this.switchFieldBtn.style.pointerEvents = 'auto'
+        this.switchFieldBtn.style.cursor = 'not-allowed'
     }
 }
