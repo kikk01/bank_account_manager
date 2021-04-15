@@ -33,7 +33,7 @@ class SecurityControllerTest extends AbstractWebTestCase
 
     public function testSuccessfullLogin()
     {
-        $this->loadFixtureFiles([dirname(__DIR__) . '/fixtures/user.yaml']);
+        $this->loadFixtureFiles([dirname(__DIR__, 2) . '/fixtures/user.yaml']);
 
         $crawler = $this->request(PathConstant::LOGIN);
         $form = $crawler->selectButton('valider')->form([

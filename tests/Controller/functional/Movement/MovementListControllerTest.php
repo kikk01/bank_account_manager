@@ -14,8 +14,8 @@ class MovementListControllerTest extends AbstractWebTestCase
     {
         $this->loadUserFixturesThenLogin('user');
         $this->loadFixtureFiles([
-            dirname(__DIR__, 2).'/fixtures/bank_account.yaml',
-            dirname(__DIR__, 2).'/fixtures/movements.yaml',
+            dirname(__DIR__, 3).'/fixtures/bank_account.yaml',
+            dirname(__DIR__, 3).'/fixtures/movements.yaml',
         ]);
         $this->assertDisplay(PathConstant::MOVEMENT_LIST, 'Compte: compte courant');
     }

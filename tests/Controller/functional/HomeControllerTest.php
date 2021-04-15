@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeControllerTest extends AbstractWebTestCase
 {
     use FixturesTrait;
-    
+
     public function testDisplayHome()
     {
         $this->request(PathConstant::HOME);
@@ -44,7 +44,7 @@ class HomeControllerTest extends AbstractWebTestCase
 
     public function testNavWhenConnected()
     {
-        $users = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
+        $users = $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/user.yaml']);
         $this->client->loginUser($users['user']);
         $this->request(PathConstant::HOME);
         $this->assertSelectorTextContains('ul.navbar-nav', 'Se déconnecter');
@@ -76,7 +76,7 @@ class HomeControllerTest extends AbstractWebTestCase
 
     public function testLogoutRoute()
     {
-        $users = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
+        $users = $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/user.yaml']);
         $this->client->loginUser($users['user']);
         $this->request('/');
         $this->client->clickLink('Se déconnecter');
