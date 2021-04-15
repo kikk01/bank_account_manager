@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Tests\AbstractWebTestCase;
+use App\Tests\PathConstant;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,7 +13,7 @@ class SecurityControllerTest extends AbstractWebTestCase
 
     public function testDisplayLogin()
     {
-        $this->request(self::LOGIN_PATH);
+        $this->request(PathConstant::LOGIN);
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('h1', 'Connection');
         $this->assertSelectorNotExists('.alert.alert-danger');
@@ -20,13 +21,13 @@ class SecurityControllerTest extends AbstractWebTestCase
 
     public function testLoginWithBadCredentials()
     {
-        $crawler = $this->request(self::LOGIN_PATH);
+        $crawler = $this->request(PathConstant::LOGIN);
 
         $form = $crawler->selectButton('valider')->form([
             'login' => ['email' => 'john@doe.fr', 'password' => 'fakepassword']
         ]);
 
-        $this->submitThenRedirect($form, self::LOGIN_PATH);
+        $this->submitThenRedirect($form, PathConstant::LOGIN);
         $this->assertSelectorExists('.alert.alert-danger');
     }
 
@@ -34,13 +35,11 @@ class SecurityControllerTest extends AbstractWebTestCase
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/fixtures/user.yaml']);
 
-        $crawler = $this->request(self::LOGIN_PATH);
+        $crawler = $this->request(PathConstant::LOGIN);
         $form = $crawler->selectButton('valider')->form([
             'login' => ['email' => 'used@test.fr', 'password' => '0000']
         ]);
 
         $this->submitThenRedirect($form, '/');
     }
-
-
 }

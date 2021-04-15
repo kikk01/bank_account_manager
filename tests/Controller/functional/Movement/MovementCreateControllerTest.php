@@ -4,22 +4,20 @@ namespace App\Tests\Controller;
 
 use App\Entity\Movement;
 use App\Tests\AbstractWebTestCase;
-use App\Tests\BankAccount\Controller\BankAccountListControllerTest;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use App\Repository\MovementRepository;
+use App\Tests\PathConstant;
 
 class MovementCreateControllerTest extends AbstractWebTestCase
 {
     use FixturesTrait;
-
-    const PATH = '/movement/create';
 
     private ?MovementRepository $movementRepository = null;
 
     public function testDisplayAccountStatement()
     {
         $this->loadUserFixturesThenLogin('user');
-        $this->assertDisplay(self::PATH, 'Importer un relevé de compte');
+        $this->assertDisplay(PathConstant::MOVEMENT_CREATE, 'Importer un relevé de compte');
     }
 
     public function testSuccessfullSendAccountStatement()
@@ -27,13 +25,13 @@ class MovementCreateControllerTest extends AbstractWebTestCase
         $this->loadUserFixturesThenLogin('user');
         $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/movements.yaml']);
 
-        $crawler = $this->request(self::PATH);
+        $crawler = $this->request(PathConstant::MOVEMENT_CREATE);
         $form = $crawler->selectButton('valider')->form([
             'movement_create' => [
                 'accountStatement' => 'tests/fixtures/accountStatement.csv'
             ]
         ]);
-        $this->submitThenRedirect($form, BankAccountListControllerTest::PATH);
+        $this->submitThenRedirect($form, PathConstant::BANK_ACCOUNT_LIST);
     }
 
     public function testNotPersistExistingMovements()
@@ -44,13 +42,13 @@ class MovementCreateControllerTest extends AbstractWebTestCase
 
         $this->verifyBddState();
 
-        $crawler = $this->request(self::PATH);
+        $crawler = $this->request(PathConstant::MOVEMENT_CREATE);
         $form = $crawler->selectButton('valider')->form([
             'movement_create' => [
                 'accountStatement' => 'tests/fixtures/accountStatementDuplicate.csv'
             ]
         ]);
-        $this->submitThenRedirect($form, BankAccountListControllerTest::PATH);
+        $this->submitThenRedirect($form, PathConstant::BANK_ACCOUNT_LIST);
 
         $this->findMovementThenAssertEquals('movement exist', 1);
         $this->findMovementThenAssertEquals('new movement', 1);

@@ -3,13 +3,12 @@
 namespace App\Tests\BankAccount\Controller;
 
 use App\Tests\AbstractWebTestCase;
+use App\Tests\PathConstant;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 class MovementListControllerTest extends AbstractWebTestCase
 {
     use FixturesTrait;
-
-    const PATH = '/bank-account/1/movement/list';
 
     public function testDisplayAccountRead()
     {
@@ -18,12 +17,12 @@ class MovementListControllerTest extends AbstractWebTestCase
             dirname(__DIR__, 2).'/fixtures/bank_account.yaml',
             dirname(__DIR__, 2).'/fixtures/movements.yaml',
         ]);
-        $this->assertDisplay(self::PATH, 'Compte: compte courant');
+        $this->assertDisplay(PathConstant::MOVEMENT_LIST, 'Compte: compte courant');
     }
 
     public function testUserNotConnected()
     {
-        $this->request(self::PATH);
-        $this->assertResponseRedirects(self::LOGIN_PATH);
+        $this->request(PathConstant::MOVEMENT_LIST);
+        $this->assertResponseRedirects(PathConstant::LOGIN);
     }
 }

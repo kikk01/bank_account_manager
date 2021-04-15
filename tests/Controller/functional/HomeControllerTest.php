@@ -3,22 +3,24 @@
 namespace App\Tests\Controller;
 
 use App\Tests\AbstractWebTestCase;
+use App\Tests\PathConstant;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Component\HttpFoundation\Response;
 
 class HomeControllerTest extends AbstractWebTestCase
 {
     use FixturesTrait;
+    
     public function testDisplayHome()
     {
-        $this->request('/');
+        $this->request(PathConstant::HOME);
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('h1', 'Hello');
     }
 
     public function testNavWhenNotConnected()
     {
-        $this->request('/');
+        $this->request(PathConstant::HOME);
         $this->assertSelectorTextContains('ul.navbar-nav', 'Se connecter');
         $this->assertSelectorTextContains('ul.navbar-nav', 'S\'inscrire');
         $this->assertSelectorTextNotContains('ul.navbar-nav', 'Se déconnecter');
@@ -26,14 +28,14 @@ class HomeControllerTest extends AbstractWebTestCase
 
     public function testLoginRoute()
     {
-        $this->request('/');
+        $this->request(PathConstant::HOME);
         $this->client->clickLink('Se connecter');
         $this->assertSelectorTextContains('h1', 'Connection');
     }
 
     public function testRegistrationRoute()
     {
-        $this->request('/');
+        $this->request(PathConstant::HOME);
         $this->client->clickLink('S\'inscrire');
         $this->assertSelectorTextContains('h1', 'S\'inscrire');
     }
@@ -42,7 +44,7 @@ class HomeControllerTest extends AbstractWebTestCase
     {
         $users = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
         $this->client->loginUser($users['user']);
-        $this->request('/');
+        $this->request(PathConstant::HOME);
         $this->assertSelectorTextContains('ul.navbar-nav', 'Se déconnecter');
         $this->assertSelectorTextNotContains('ul.navbar-nav', 'Se connecter');
         $this->assertSelectorTextNotContains('ul.navbar-nav', 'S\'inscrire');

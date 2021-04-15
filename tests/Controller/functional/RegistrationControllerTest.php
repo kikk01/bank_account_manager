@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Tests\AbstractWebTestCase;
+use App\Tests\PathConstant;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,25 +14,25 @@ class RegistrationControllerTest extends AbstractWebTestCase
 
     public function testDisplayRegistration()
     {
-        $this->request('/registration');
+        $this->request(PathConstant::REGISTRATION);
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('h1', 'S\'inscrire');
     }
 
     public function testSuccessfullRegister()
     {
-        $crawler = $this->request('/registration');
+        $crawler = $this->request(PathConstant::REGISTRATION);
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'register@doe.fr', '00000000', '00000000');
 
-        $this->submitThenRedirect($form, '/');
+        $this->submitThenRedirect($form, PathConstant::HOME);
         $this->assertSelectorExists('h1', 'Hello');
     }
 
     public function testInvalidRegisterUsedEmail()
     {
-        $crawler = $this->request('/registration');
+        $crawler = $this->request(PathConstant::REGISTRATION);
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'used@test.fr', '00000000', '00000000');
@@ -40,7 +41,7 @@ class RegistrationControllerTest extends AbstractWebTestCase
 
     public function testInvalidRegisterNotSamePassword()
     {
-        $crawler = $this->request('/registration');
+        $crawler = $this->request(PathConstant::REGISTRATION);
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'new@test.fr', '000000000000', '00000000');
@@ -49,7 +50,7 @@ class RegistrationControllerTest extends AbstractWebTestCase
 
     public function testInvalidRegisterTooShortPassword()
     {
-        $crawler = $this->request('/registration');
+        $crawler = $this->request(PathConstant::REGISTRATION);
         $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
 
         $form = $this->handleRegisterForm($crawler, 'new@test.fr', '10000000', '00000000');

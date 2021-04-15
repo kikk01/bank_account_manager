@@ -3,28 +3,27 @@
 namespace App\Tests\BankAccount\Controller;
 
 use App\Tests\AbstractWebTestCase;
+use App\Tests\PathConstant;
 
 class BankAccountListControllerTest extends AbstractWebTestCase
 {
-    const PATH = '/bank-account/list';
-
     public function testDisplayAccountList()
     {
         $this->loadUserFixturesThenLogin('user');
-        $this->assertDisplay(self::PATH, 'Liste des comptes');
+        $this->assertDisplay(PathConstant::BANK_ACCOUNT_LIST, 'Liste des comptes');
     }
 
     public function testUserNotConnected()
     {
-        $this->request(self::PATH);
-        $this->assertResponseRedirects(self::LOGIN_PATH);
+        $this->request(PathConstant::BANK_ACCOUNT_LIST);
+        $this->assertResponseRedirects(PathConstant::LOGIN);
     }
 
     public function testBankAccountReadRoute()
     {
         $this->loadUserFixturesThenLogin('user');
         $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/bank_account.yaml']);
-        $this->request(self::PATH);
+        $this->request(PathConstant::BANK_ACCOUNT_LIST);
         $this->client->clickLink('compte courant');
         $this->assertSelectorTextContains('h1', 'Compte: compte courant');
     }
