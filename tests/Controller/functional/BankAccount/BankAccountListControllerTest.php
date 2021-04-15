@@ -22,7 +22,7 @@ class BankAccountListControllerTest extends AbstractWebTestCase
     public function testBankAccountReadRoute()
     {
         $this->loadUserFixturesThenLogin('user');
-        $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/bank_account.yaml']);
+        $this->loadFixtureFiles([dirname(__DIR__, 3).'/fixtures/bank_account.yaml']);
         $this->request(PathConstant::BANK_ACCOUNT_LIST);
         $this->client->clickLink('compte courant');
         $this->assertSelectorTextContains('h1', 'Compte: compte courant');
