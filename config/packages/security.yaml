@@ -35,8 +35,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/bank-account, roles: 'ROLE_USER' }
-        - { path: ^/movement/create, roles: 'ROLE_USER' }
+        - { path: ^/bank-account/, roles: 'ROLE_USER' }
+        - { path: ^/movement/, roles: 'ROLE_USER' }
 
 
         # - { path: ^/profile, roles: ROLE_USER }
