@@ -56,7 +56,7 @@ class HomeControllerTest extends AbstractWebTestCase
 
     public function testBankAccountListRoute()
     {
-        $users = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
+        $users = $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/user.yaml']);
         $this->client->loginUser($users['user']);
         $this->request('/');
         $this->client->clickLink('Mes comptes');
@@ -66,7 +66,7 @@ class HomeControllerTest extends AbstractWebTestCase
 
     public function testBankAccountCreatetRoute()
     {
-        $users = $this->loadFixtureFiles([dirname(__DIR__).'/fixtures/user.yaml']);
+        $users = $this->loadFixtureFiles([dirname(__DIR__, 2).'/fixtures/user.yaml']);
         $this->client->loginUser($users['user']);
         $this->request('/');
         $this->client->clickLink('Nouveau compte');
