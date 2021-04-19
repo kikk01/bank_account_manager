@@ -13,8 +13,6 @@ abstract class AbstractWebTestCase extends WebTestCase
 {
     use FixturesTrait;
 
-    const LOGIN_PATH = '/login';
-
     protected KernelBrowser $client;
 
     protected function setUp(): void

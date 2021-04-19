@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}compte: {{ bankAccount.name }}{% endblock %}
+
+{% block body %}
+<h1 class="h3 mb-3 font-weight-normal">Compte: {{ bankAccount.name }}</h1>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Montant</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for movement in movements %}
+            <tr class="
+                {{loop.index % 2 == 0 ? 'bg-white' : 'bg-light'}}
+                {{movement.isDebit ? 'text-danger' :  'text-dark'}}
+            ">
+                <td>{{ movement.date|date('d-m-Y') }}</td>
+                <td>
+                    <a
+                        data-bs-toggle="collapse"
+                        href="#m-{{ movement.id }}"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="m-{{ movement.id }}"
+                    >
+                        {{ movement.category }}
+                        {% if movement.category == null %}Non catégorisé{% endif %}
+                    </a>
+                </td>
+                <td>{{ movement.description }}</td>
+                <td>{{ movement.amount }}</td>
+            </tr>
+
+            <tr class="collapse multi-collapse" id="m-{{movement.id}}">
+                <td colspan="4"></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('movementAddCategory') }}
+{% endblock %}
