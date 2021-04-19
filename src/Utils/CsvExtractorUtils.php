@@ -19,6 +19,7 @@ class CsvExtractorUtils
 
     public function extract()
     {
+        // serve to detect end line for mac file
         ini_set('auto_detect_line_endings', TRUE);
 
         $movements = [];
