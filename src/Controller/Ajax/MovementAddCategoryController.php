@@ -5,13 +5,13 @@ namespace App\Controller\Ajax;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Movement;
 use App\Handler\Movement\MovementAddCategoryHandler;
-use App\Handler\Movement\MovementCreateCategoryHandler;
 use App\Service\FindCategoryService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
 class MovementAddCategoryController
@@ -20,11 +20,14 @@ class MovementAddCategoryController
     private Environment $twig;
     private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(RequestStack $request, Environment $twig, UrlGeneratorInterface $urlGenerator)
+    private Security $security;
+
+    public function __construct(RequestStack $request, Environment $twig, UrlGeneratorInterface $urlGenerator, Security $security)
     {
         $this->request = $request;
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;
+        $this->security = $security;
     }
 
     /**
@@ -35,6 +38,10 @@ class MovementAddCategoryController
         FindCategoryService $findCategoryService,
         MovementAddCategoryHandler $movementAddCategoryHandler
     ){
+        if ($movement->getBankAccount()->getUser() !== $this->security->getUser()) {
+            throw new AccessDeniedException();
+        }
+
         $options = ['categories' => $findCategoryService->findCategoriesByUSer()];
 
         if ($movementAddCategoryHandler->handle($this->request->getCurrentRequest(), $movement,  $options)){
