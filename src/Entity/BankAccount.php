@@ -40,7 +40,7 @@ class BankAccount
     private ?float $balance = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", cascade={"persist"})
      * @Assert\Valid
      */
     private ?User $user;

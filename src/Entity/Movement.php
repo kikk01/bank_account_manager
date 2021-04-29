@@ -38,7 +38,7 @@ class Movement
     private ?DateTime $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BankAccount")
+     * @ORM\ManyToOne(targetEntity="BankAccount", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * Assert\Valid
      */

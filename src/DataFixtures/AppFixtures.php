@@ -2,7 +2,12 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\BankAccount as EntityBankAccount;
+use App\Entity\Category;
+use App\Entity\Movement;
 use App\Entity\User;
+use BankAccount;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -18,13 +23,24 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 10; $i++) {
-            $user = new User;
-            $user->setPassword($this->passwordEncoder->encodePassword($user, 'password'));
-            $user->setEmail(sprintf('email%d@email.com', $i));
-            $manager->persist($user);
-        }
-        
+        $userWithoutCategories = (new User)->setEmail('userwithoutcategories@test.fr');
+        $userWithoutCategories->setPassword($this->passwordEncoder->encodePassword($userWithoutCategories, '00000000'));
+        $bankAccount = (new EntityBankAccount)->setName('personnal account')->setUser($userWithoutCategories);
+        $movement = (new Movement)->setAmount(100)->setDate(new DateTime())->setDescription('test')->setBankAccount($bankAccount);
+        $manager->persist($movement);
+
+        $user = (new User)->setEmail('test@test.fr');
+        $user->setPassword($this->passwordEncoder->encodePassword($user, '00000000'));
+        $category = (New Category)->setName('category new')->setUser($user);
+        $bankAccount = (new EntityBankAccount)->setName('personnal account')->setUser($user);
+        $movement = (new Movement)
+            ->setAmount(100)
+            ->setDate(new DateTime())
+            ->setDescription('test')
+            ->setBankAccount($bankAccount);
+        $manager->persist($movement);
+        $manager->persist($category);
+
         $manager->flush();
     }
 }

@@ -30,10 +30,16 @@ configure your .env.local then
 `php bin/console server:start`
 
 7. launch encore for javascript  
-`./node_modules/.bin/encore dev-server`
+`./node_modules/.bin/encore dev-server`  
+
+8. Create data (required for end to end test)  
+`composer prepare`
 
 
-You are ready to visit the app :)
+You are ready to visit the app :)  
+You can test the app quickly with  
+user : test@test.fr  
+password : 00000000
 
 
 ## test with phpunit
