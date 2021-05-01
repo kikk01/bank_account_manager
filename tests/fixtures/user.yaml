@@ -2,3 +2,6 @@ App\Entity\User:
   user:
     email: used\@test.fr
     password: \$2y\$12\$lDzgOlIrlOLBKITw2hWqgO2.g5SnkJ3w7q17Lke7hoAHMAfT5ZLe.
+  user_with_no_categories:
+    email: userwithnocategories@test.fr
+    password: \$2y\$12\$lDzgOlIrlOLBKITw2hWqgO2.g5SnkJ3w7q17Lke7hoAHMAfT5ZLe.
