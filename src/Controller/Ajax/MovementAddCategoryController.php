@@ -19,11 +19,14 @@ class MovementAddCategoryController
     private RequestStack $request;
     private Environment $twig;
     private UrlGeneratorInterface $urlGenerator;
-
     private Security $security;
 
-    public function __construct(RequestStack $request, Environment $twig, UrlGeneratorInterface $urlGenerator, Security $security)
-    {
+    public function __construct(
+        RequestStack $request,
+        Environment $twig,
+        UrlGeneratorInterface $urlGenerator,
+        Security $security
+    ){
         $this->request = $request;
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;

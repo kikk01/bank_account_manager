@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\BankAccount;
-use App\Entity\User;
 use App\Handler\Movement\MovementCreateHandler;
 use App\Service\BankAccount\FindBankAccountsByUser;
 use App\Service\MovementService;
@@ -62,10 +61,5 @@ class MovementController
         return new Response($this->twig->render('movement/create.html.twig', [
             'form' => $movementCreateHandler->createView(),
         ]));
-    }
-
-    private function canRead(User $user, BankAccount $bankAccount)
-    {
-
     }
 }
