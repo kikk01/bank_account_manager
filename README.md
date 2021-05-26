@@ -14,25 +14,32 @@ More, this application will provide users fonctionnalities and clean interfaces 
 1. Download the repository  
 `git clone https://github.com/kikk01/bank_account_manager.git`
 
-2. Update dependencies  
+2. Go to the repository
+`cd bank_account_manager`
+
+3. Update dependencies  
 `composer update`
 
-3. Update Javascript dependencies  
+4. Update Javascript dependencies  
 `yarn install --force`
 
-4. Create BDD  
+5. Install encore
+`yarn encore dev`
+
+6. Create BDD  
 configure your .env.local then  
 `php bin/console doctrine:database:create`
 
-5. Update BDD  
+7. Update BDD  
 `php bin/console doctrine:migrations:migrate`  
-6. launch server  
-`php bin/console server:start`
 
-7. launch encore for javascript  
+8. launch server  
+`symfony server:start`
+
+9. launch encore for javascript  
 `./node_modules/.bin/encore dev-server`  
 
-8. Create data (required for end to end test)  
+10. Create data (required for end to end test)  
 `composer prepare`
 
 
