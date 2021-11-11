@@ -6,13 +6,12 @@ use App\DataTransferObject\Credentials;
 use App\Form\LoginType;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -21,6 +20,10 @@ use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 
+/**
+ * @deprecated since symfony 5.3
+ * use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator instead
+ */
 class LoginFormAuthenticathorAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
@@ -28,23 +31,23 @@ class LoginFormAuthenticathorAuthenticator extends AbstractFormLoginAuthenticato
     public const LOGIN_ROUTE = 'app_login';
 
     private $urlGenerator;
-    private $passwordEncoder;
+    private $passwordHasher;
     private FormFactoryInterface $formFactory;
     private UserRepository $userRepository;
 
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordHasher,
         FormFactoryInterface $formFactory,
         UserRepository $userRepository
     ) {
         $this->urlGenerator = $urlGenerator;
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordHasher = $passwordHasher;
         $this->formFactory = $formFactory;
         $this->userRepository = $userRepository;
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         return self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
@@ -53,7 +56,7 @@ class LoginFormAuthenticathorAuthenticator extends AbstractFormLoginAuthenticato
     public function getCredentials(Request $request)
     {
         /** Credentials $credentials */
-        $credentials = new Credentials('');
+        $credentials = new Credentials();
         $form = $this->formFactory->create(LoginType::class, $credentials)->handleRequest($request);
 
         $request->getSession()->set(
@@ -82,7 +85,7 @@ class LoginFormAuthenticathorAuthenticator extends AbstractFormLoginAuthenticato
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials->getPassword());
+        return $this->passwordHasher->isPasswordValid($user, $credentials->getPassword());
     }
 
     /**
@@ -93,13 +96,13 @@ class LoginFormAuthenticathorAuthenticator extends AbstractFormLoginAuthenticato
         return $credentials->getPassword();
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
+        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+            return new Response($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        return new Response($this->urlGenerator->generate('home'));
     }
 
     protected function getLoginUrl()
