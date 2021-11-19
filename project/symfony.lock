@@ -408,6 +408,9 @@
             "ref": "93d9baa582d0a755cc9ef81bc38a921d5fa16973"
         }
     },
+    "symfony/password-hasher": {
+        "version": "v5.3.8"
+    },
     "symfony/phpunit-bridge": {
         "version": "4.3",
         "recipe": {

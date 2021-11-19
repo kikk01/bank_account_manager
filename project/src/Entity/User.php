@@ -9,13 +9,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity("email")
  * 
  */
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -73,10 +74,16 @@ class User implements UserInterface
      * A visual identifier that represents this user.
      *
      * @see UserInterface
+     * @deprecated 5.3
      */
     public function getUsername(): string
     {
         return (string) $this->email;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
     }
 
     /**

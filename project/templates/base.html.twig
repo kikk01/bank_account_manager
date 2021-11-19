@@ -36,11 +36,11 @@
                                 <a class="nav-link" href="{{ path('bank_account_create') }}">{{ 'nav.bank_account_create'|trans }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_logout') }}">{{ 'nav.logout'|trans }}</a>
+                                <a class="nav-link" href="{{ path('logout') }}">{{ 'nav.logout'|trans }}</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_login') }}">{{ 'nav.login'|trans }}</a>
+                                <a class="nav-link" href="{{ path('login') }}">{{ 'nav.login'|trans }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('registration') }}">{{ 'register'|trans({}, 'common') }}</a>
