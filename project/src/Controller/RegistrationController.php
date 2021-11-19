@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
 
 class RegistrationController extends AbstractController
@@ -20,8 +22,8 @@ class RegistrationController extends AbstractController
     public function registration(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
-        GuardAuthenticatorHandler $guard,
-        FormLoginAuthenticator $login
+        UserAuthenticatorInterface $userAuthenticator,
+        AuthenticatorInterface $authenticator
     ): Response {
 
         $user = new User;
@@ -34,12 +36,7 @@ class RegistrationController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            return $guard->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $login,
-                'main'
-            );
+            return $userAuthenticator->authenticateUser($user, $authenticator, $request);
         }
 
         return $this->render('registration/registration.html.twig', [
