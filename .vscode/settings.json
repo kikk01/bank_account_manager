@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "test",
+            "group": "test",
+            "database": "${workspaceFolder:bank_account_manager}/project/var/cache/test/test.db"
+        }
+    ]
+}
