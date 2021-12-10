@@ -56,8 +56,7 @@ Create .env.test.local file at the root of the project add this line :
 `DATABASE_URL="sqlite:///%kernel.project_dir%/var/cache/test/test.db"`
 
 2. launch test  
-`./bin/phpunit`
-
+`php ./vendor/bin/phpunit`
 
 ## Contact me
 
